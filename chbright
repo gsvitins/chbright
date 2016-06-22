@@ -1,4 +1,5 @@
-#!/usr/bin/env python
+#!/usr/bin/env python3
+
 
 import sys
 import argparse
@@ -6,7 +7,6 @@ import argparse
 
 class Brightness(object):
     file = "/sys/class/backlight/intel_backlight/brightness"
-    #file = "brightness"
 
     def read_brightness(self):
         with open(self.file, 'r') as f:
@@ -14,8 +14,11 @@ class Brightness(object):
         return current_brightness
 
     def write_brightness(self, nr):
-        with open(self.file, 'w') as f:
-            f.write(str(nr))
+        try:
+            with open(self.file, 'w') as f:
+                f.write(str(nr))
+        except Exception as e:
+            print(e)
 
     def increase_brightness(self, nr):
         self.write_brightness(self.read_brightness() + int(nr))
@@ -24,8 +27,34 @@ class Brightness(object):
         self.write_brightness(self.read_brightness() - int(nr))
 
 
-parser = argparse.ArgumentParser(description='This is test', version='0.1')
-#parser.parse_args()
+parser = argparse.ArgumentParser(description='Set laptop screen brightness.')
+parser.add_argument('-i', '--increase',
+                    metavar='number',
+                    type=int,
+                    help='Increase/decrease current brightness by chosen '
+                         'number.')
+parser.add_argument('-s', '--set',
+                    metavar='number',
+                    type=int,
+                    help='Set brightness to your chosen number.')
+parser.add_argument('-d', '--display',
+                    action='store_true',
+                    help='Shows current brightness number.')
 
-#br = Brightness()
-#br.write_brightness(sys.argv[1])
+args = parser.parse_args()
+
+if len(sys.argv) == 1:
+    parser.print_help()
+    sys.exit(1)
+
+if args.increase:
+    chbright = Brightness()
+    chbright.increase_brightness(args.increase)
+
+if args.display:
+    chbright = Brightness()
+    print(chbright.read_brightness())
+
+if args.set:
+    chbright = Brightness()
+    chbright.write_brightness(args.set)
