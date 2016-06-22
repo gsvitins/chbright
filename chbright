@@ -51,10 +51,10 @@ if args.increase:
     chbright = Brightness()
     chbright.increase_brightness(args.increase)
 
-if args.display:
-    chbright = Brightness()
-    print(chbright.read_brightness())
-
 if args.set:
     chbright = Brightness()
     chbright.write_brightness(args.set)
+
+if args.display:
+    chbright = Brightness()
+    print('current brightness: {}'.format(chbright.read_brightness()))
