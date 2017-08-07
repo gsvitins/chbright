@@ -7,8 +7,8 @@ ___USAGE___
 
 __usage: chbright [-h] [-i number] [-s number] [-d]__
 
-__-i__ number, --increase numbe _(Increase/decrease current brightness by chosen number.)_
+__-i__ number, --increase numbe _(increase/decrease current brightness by chosen number.)_
 
-__-s__ number, --set number _(Set brightness to your chosen number.)_
+__-s__ number, --set number _(set brightness to your chosen number.)_
 
-__-d__ --display _(Show current brightness)_
+__-d__ --display _(show current brightness)_
